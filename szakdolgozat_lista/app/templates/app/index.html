@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+    <title>SzakDolgozatok</title>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Szakdolgozatok</h1>
+        </header>
+        <article>
+            <h3>Számalk-Szalézi technikum és SzakGimnázium 2020-2022 évfolyam szoftverfejlesztőinek szakdolgozatai:</h3>
+            {%if szakdolgozatok%}
+                <div>
+                    <table>
+                    <tr>
+                        <th>Szakdoga neve</th>
+                        <th>Github link</th>
+                        <th>Oldal link</th>
+                        <th>Tagok neve</th>
+                       
+                    </tr>
+                    {% for szakdolgozat in szakdolgozatok %}
+                    <tr>
+                        <td>{{szakdolgozat.szakdoga_nev}}</td>
+                        <td>{{szakdolgozat.githublink}}</td>
+                        <td>{{szakdolgozat.oldallink}}</td>
+                        <td>{{szakdolgozat.tagokneve}}</td>
+                        <td><a href="{% url 'modositas' szakdolgozat.id %}">Módosít</a></td>
+                        <td><a href="{% url 'torles' szakdolgozat.id %}">Törlés</a></td>
+                    </tr>
+                    {%endfor%}
+                </table>
+                </div>
+            {%else%}
+            <p>Nincs adat</p>
+            {%endif%}
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Küld">
+            </form>
+        </article>
+        <footer>
+            <p>@Pantl Alex Balázs</p>
+        </footer>
+    </main>
+</body>
+</html>
